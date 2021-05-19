@@ -16,4 +16,4 @@ NODE_NAME = "poly_id"
 EDGE_WEIGHT_NAME = "movement"
 
 # Debug
-DEBUG = True
+DEBUG = False
