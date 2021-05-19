@@ -15,13 +15,13 @@ def calculate_degree_matrix(A):
     '''
     A_triu = scipy.sparse.triu(A)
     degree = A_triu.sum(axis=0)
-    D = scipy.sparse.eye(25).multiply(degree)
+    D = scipy.sparse.eye(A.shape[0]).multiply(degree)
 
     return D
 
-def calculate_spectral_norm_matrix(G):
+def calculate_spectral_norm_matrix(G, nodelist=None):
     # Build adjacency matrix with self-connections A' (A_)
-    A = nx.adjacency_matrix(G)
+    A = nx.adjacency_matrix(G, nodelist=nodelist)
     A_ = A + scipy.sparse.eye(A.shape[0])
 
     # Calculate degree matrix of A_

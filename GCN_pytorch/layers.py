@@ -4,9 +4,9 @@ from torch.nn.parameter import Parameter
 from torch.nn.modules.module import Module
 
 
-class GCN(Module):
+class GCN_impl(Module):
     def __init__(self, in_features, out_features):
-        super(GCN, self).__init__()
+        super(GCN_impl, self).__init__()
         self.in_features = in_features
         self.out_features = out_features
         self.weights = Parameter(torch.FloatTensor(in_features, out_features))
