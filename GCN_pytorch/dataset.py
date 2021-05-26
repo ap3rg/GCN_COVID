@@ -73,6 +73,18 @@ class GCN_Dataset(Dataset):
     def get_dates(self):
         return self.dates
 
+    def get_slice(self, start, end):
+        assert type(start) == type(end)
+        if isinstance(start, pd.Timestamp):
+            start_date = start
+            end_date = end
+        else:
+            start_date = self.dates[start]
+            end_date = self.dates[end]
+        
+        df_slice = self.df_data[(self.df_data["date_time"] >= start_date) & (self.df_data["date_time"] < end_date)]
+        return df_slice
+
     def imputate_datapoint(self, df, date_times):
         """
         Args:
