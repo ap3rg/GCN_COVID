@@ -1,5 +1,6 @@
 import os
 import math
+import random
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -37,6 +38,7 @@ def train_model(num_epochs, dataset, end_idx, num_nodes, num_attrs, save=True):
     # Loss function
     loss_function = torch.nn.MSELoss()
     losses = []
+    dataset_ids = list(range(len(dataset)))
 
     for epoch in range(num_epochs):
         running_loss = 0.0
@@ -45,7 +47,10 @@ def train_model(num_epochs, dataset, end_idx, num_nodes, num_attrs, save=True):
         if epoch % 20 == 0:
             print(f"\tEpoch {epoch}")
 
-        for idx in range(len(dataset)):
+        # suffle dataset to avoid learning history
+        random.shuffle(dataset_ids)
+
+        for idx in dataset_ids:
             if idx == end_idx:
                 break
 
@@ -142,7 +147,7 @@ def main(train=True, test=True):
 
     if train:
         print(f"Trainning model with prediction window {cons.PRED_WINDOW} days...")
-        trained_model = train_model(50, dataset, train_length, num_nodes, num_attrs)
+        trained_model = train_model(cons.NUM_EPOCHS, dataset, train_length, num_nodes, num_attrs)
     else:
         n_features = num_nodes * num_attrs * (cons.EMB_WINDOW + 1)
 
